@@ -19,7 +19,7 @@ export class Punto1Component {
     {
       titulo: 'Cuidados para gatos con diarrea',
       noticia: 'La diarrea en gatos puede ser causada por cambios en la dieta, parásitos o enfermedades subyacentes. Consulta a tu veterinario si persiste más de 24 horas.',
-      img: 'https://es.onlyfresh.com/cdn/shop/articles/AManova_diarrea_nei_gatti.jpg'
+      img: 'https://c4.wallpaperflare.com/wallpaper/884/204/905/cyberpunk-edgerunners-cyberpunk-2077-cd-projekt-red-trigger-anime-hd-wallpaper-preview.jpg'
     },
     {
       titulo: '¿Los gatos ven en color?',

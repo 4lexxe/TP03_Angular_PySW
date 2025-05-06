@@ -24,7 +24,7 @@ export class HomeComponent {
       descripcion: 'Galería de noticias con navegación entre ellas',
       ruta: '/punto1',
       icono: 'bi-newspaper',
-      imagen: 'https://primerapagina.info/vistas/uploads/e716005a645b73903f0a6ad23718c0ac.webp'
+      imagen: 'https://c4.wallpaperflare.com/wallpaper/884/204/905/cyberpunk-edgerunners-cyberpunk-2077-cd-projekt-red-trigger-anime-hd-wallpaper-preview.jpg'
     },
     {
       titulo: 'Punto 2 - Productos',
