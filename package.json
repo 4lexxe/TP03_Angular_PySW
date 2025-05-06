@@ -4,10 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:tp03": "node dist/tp03/server/server.mjs"
+    "serve:ssr:tp03": "node dist/tp03/server/server.mjs",
+    "vercel-build": "ng build --configuration production"
   },
   "private": true,
   "dependencies": {
