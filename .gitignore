@@ -1,0 +1,69 @@
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# Compilados
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Dependencias
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs y editores
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Angular
+.angular/cache
+.sass-cache/
+connect.lock
+coverage
+libpeerconnection.log
+testem.log
+typings
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Historial de comandos
+.history
+.bash_history
+.zsh_history
+.command_history
+.node_repl_history
+
+# Archivos de historial del navegador
+browser_history.json
+browsing_history.db
+
+# Logs de desarrollo
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de entorno
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Firebase
+.firebase/
+firebase-debug.log

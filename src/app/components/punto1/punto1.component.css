@@ -1,0 +1,121 @@
+.slide-container {
+  position: relative;
+  overflow: hidden;
+  min-height: 500px;
+  border-radius: 0;
+}
+
+.btn i {
+  font-size: 1.5rem;
+}
+
+.card {
+  box-shadow: none;
+  border: 3px solid #000;
+  border-radius: 0;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  background-color: #f8f9fa;
+  min-height: 600px;
+}
+
+.card-header {
+  font-family: 'Courier New', monospace;
+  padding: 15px 20px;
+  border-bottom: 2px solid #000;
+  background-color: #e9ecef;
+  color: #212529;
+}
+
+.card-body {
+  padding: 0;
+  min-height: 450px;
+}
+
+.card-footer {
+  background-color: #e9ecef;
+  padding: 15px;
+  border-top: 2px solid #000;
+}
+
+img {
+  transition: transform 0.5s ease;
+  height: 450px;
+  border-bottom: 2px solid #000;
+  object-fit: cover;
+}
+
+.position-absolute.bottom-0 {
+  background: rgba(248, 249, 250, 0.85);
+  padding: 20px;
+  border-top: 2px solid #000;
+}
+
+.position-absolute.bottom-0 h3 {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #212529;
+  font-family: 'Courier New', monospace;
+}
+
+.position-absolute.bottom-0 p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+}
+
+.btn-dark {
+  background-color: #000;
+  border: 2px solid #000;
+  color: #fff;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+}
+
+.btn-dark:hover {
+  opacity: 1;
+  background-color: #fff;
+  color: #000;
+}
+
+.btn-primary {
+  background-color: #f8d7da;
+  border: 2px solid #000;
+  color: #000;
+  border-radius: 0;
+  min-width: 40px;
+}
+
+.btn-outline-primary {
+  background-color: transparent;
+  border: 2px solid #000;
+  color: #000;
+  border-radius: 0;
+  min-width: 40px;
+}
+
+.btn-primary:hover, .btn-outline-primary:hover {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+@media (max-width: 768px) {
+  .position-absolute.bottom-0 h3 {
+    font-size: 1.5rem;
+  }
+
+  .position-absolute.bottom-0 p {
+    font-size: 0.9rem;
+  }
+
+  img {
+    max-height: 350px;
+  }
+}

@@ -1,0 +1,286 @@
+/* Estilos para el Juego del Ahorcado */
+.ahorcado-titulo {
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #333;
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.ahorcado-categoria {
+  font-family: 'Courier New', monospace;
+  color: #666;
+}
+
+.ahorcado-imagen-container {
+  border: 2px solid #000;
+  background-color: #f8f9fa;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ahorcado-imagen {
+  max-height: 280px;
+}
+
+.ahorcado-intentos {
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  color: #333;
+}
+
+.ahorcado-palabra {
+  margin-top: 20px;
+}
+
+.ahorcado-letra {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  margin: 0 5px;
+  font-size: 24px;
+  border-bottom: 2px solid #000;
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.ahorcado-palabra-resuelta {
+  margin-top: 10px;
+  font-family: 'Courier New', monospace;
+  color: #333;
+  letter-spacing: 1px;
+}
+
+.ahorcado-resultado {
+  margin: 20px 0;
+  padding: 15px;
+  border: 2px solid #000;
+  background-color: #f8f9fa;
+}
+
+.ahorcado-ganado {
+  animation: victoria-animacion 1s ease-in-out infinite alternate;
+  font-size: 1.4rem;
+  color: #28a745;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+@keyframes victoria-animacion {
+  from { transform: scale(1); color: #28a745; }
+  to { transform: scale(1.1); color: #218838; }
+}
+
+.ahorcado-perdido {
+  color: #dc3545;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.ahorcado-teclado {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.ahorcado-btn-letra {
+  width: 40px;
+  height: 40px;
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
+  border: 2px solid #000;
+  background-color: #fff;
+  color: #000;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ahorcado-btn-letra:hover:not(:disabled) {
+  background-color: #000;
+  color: #fff;
+}
+
+.ahorcado-btn-letra.usado {
+  cursor: not-allowed;
+}
+
+.ahorcado-btn-letra.correcto {
+  background-color: #d4edda;
+  border-color: #28a745;
+  color: #28a745;
+}
+
+.ahorcado-btn-letra.incorrecto {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.ahorcado-btn-reiniciar {
+  background-color: #fff;
+  border: 2px solid #000;
+  color: #000;
+  padding: 8px 15px;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.ahorcado-btn-reiniciar:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.ahorcado-instrucciones {
+  font-family: 'Courier New', monospace;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.ahorcado-btn-iniciar {
+  background-color: #fff;
+  border: 2px solid #000;
+  color: #000;
+  padding: 10px 20px;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.ahorcado-btn-iniciar:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+/* Estilos para el modal */
+.modal-content {
+  border: 2px solid #000;
+  border-radius: 0;
+}
+
+.modal-header {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #000;
+  font-family: 'Courier New', monospace;
+}
+
+.modal-footer {
+  background-color: #f8f9fa;
+  border-top: 2px solid #000;
+}
+
+.ahorcado-resultado-modal {
+  padding: 20px;
+}
+
+.ahorcado-imagen-modal {
+  max-height: 200px;
+  margin-bottom: 15px;
+}
+
+/* Estilos para el modal personalizado */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.modal-custom {
+  background-color: white;
+  width: 90%;
+  max-width: 500px;
+  border: 2px solid #000;
+  animation: modalFadeIn 0.3s;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #000;
+}
+
+.modal-title {
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  color: #000;
+}
+
+.modal-body {
+  padding: 1rem;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-top: 2px solid #000;
+}
+
+@media (max-width: 768px) {
+  .ahorcado-imagen-container {
+    height: 250px;
+  }
+
+  .ahorcado-letra {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 20px;
+    margin: 0 3px;
+  }
+
+  .ahorcado-btn-letra {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+}

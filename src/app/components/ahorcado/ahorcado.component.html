@@ -1,0 +1,34 @@
+<div class="ahorcado-container" [class.perdido]="estaPerdido">
+  <!-- Base -->
+  <div class="ahorcado-base"></div>
+
+  <!-- Poste vertical -->
+  <div class="ahorcado-poste-vertical"></div>
+
+  <!-- Poste horizontal -->
+  <div class="ahorcado-poste-horizontal"></div>
+
+  <!-- Cuerda -->
+  <div class="ahorcado-cuerda"></div>
+
+  <!-- Persona (agrupa todas las partes del cuerpo) -->
+  <div class="persona">
+    <!-- Cabeza -->
+    <div class="ahorcado-cabeza" [class.visible]="mostrarParte(umbralCabeza)"></div>
+
+    <!-- Cuerpo -->
+    <div class="ahorcado-cuerpo" [class.visible]="mostrarParte(umbralCuerpo)"></div>
+
+    <!-- Brazo izquierdo -->
+    <div class="ahorcado-brazo-izq" [class.visible]="mostrarParte(umbralBrazoIzq)"></div>
+
+    <!-- Brazo derecho -->
+    <div class="ahorcado-brazo-der" [class.visible]="mostrarParte(umbralBrazoDer)"></div>
+
+    <!-- Pierna izquierda -->
+    <div class="ahorcado-pierna-izq" [class.visible]="mostrarParte(umbralPiernaIzq)"></div>
+
+    <!-- Pierna derecha -->
+    <div class="ahorcado-pierna-der" [class.visible]="mostrarParte(umbralPiernaDer)"></div>
+  </div>
+</div>

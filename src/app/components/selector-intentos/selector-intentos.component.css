@@ -1,0 +1,57 @@
+.selector-intentos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  font-family: 'Courier New', monospace;
+}
+
+.intentos-label {
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #333;
+}
+
+.intentos-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.intentos-select {
+  padding: 8px 15px;
+  border: 2px solid #000;
+  background-color: #fff;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 30px;
+}
+
+.intentos-random-btn {
+  padding: 8px 15px;
+  border: 2px solid #000;
+  background-color: #fff;
+  color: #000;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.intentos-random-btn:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+@media (max-width: 576px) {
+  .intentos-controls {
+    flex-direction: column;
+  }
+}

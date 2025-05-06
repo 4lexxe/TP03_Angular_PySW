@@ -1,0 +1,115 @@
+@if (isBrowser) {
+  <app-confeti
+    [activo]="mostrarConfeti"
+    [duracion]="5000"
+    [densidad]="150"
+    (finAnimacion)="onConfetiFinished()">
+  </app-confeti>
+}
+
+<div class="container mt-5">
+  <div class="row mb-4">
+    <div class="col-12 text-center">
+      <h2 class="ahorcado-titulo">JUEGO DEL AHORCADO</h2>
+      <h5 class="ahorcado-categoria">Categoría: {{ categoria }}</h5>
+
+      <!-- Selector de intentos -->
+      <div class="mt-3">
+        <app-selector-intentos (intentosSeleccionados)="cambiarIntentos($event)"></app-selector-intentos>
+      </div>
+    </div>
+  </div>
+
+  @if (juegoComenzado) {
+    <div class="row">
+      <!-- Columna izquierda: Imagen del ahorcado -->
+      <div class="col-md-6 text-center mb-4">
+        <div class="ahorcado-imagen-container">
+          <!-- Componente de ahorcado con CSS -->
+          <app-ahorcado
+            [intentosFallidos]="intentosFallidos"
+            [maxIntentos]="maxIntentos">
+          </app-ahorcado>
+        </div>
+
+        <div class="ahorcado-intentos mt-3">
+          <p>Intentos restantes: {{ maxIntentos - intentosFallidos }}</p>
+        </div>
+      </div>
+
+      <!-- Columna derecha: Palabra y letras -->
+      <div class="col-md-6">
+        <!-- Palabra actual con espacios -->
+        <div class="ahorcado-palabra text-center mb-4">
+          @for (letra of palabraActual; track $index) {
+            <span class="ahorcado-letra">{{ letra }}</span>
+          }
+        </div>
+
+        <!-- Resultado del juego (visible solo cuando gana) -->
+        @if (juegoTerminado && juegoGanado) {
+          <div class="ahorcado-resultado text-center mb-4">
+            <p class="ahorcado-ganado">¡FELICIDADES! Has ganado</p>
+            <p class="ahorcado-palabra-resuelta">La palabra era: <strong>{{ palabraSeleccionada }}</strong></p>
+            <button class="ahorcado-btn-reiniciar" (click)="reiniciar()">
+              Jugar de nuevo
+            </button>
+          </div>
+        }
+
+        <!-- Teclado con todas las letras -->
+        <div class="ahorcado-teclado">
+          @for (letra of alfabeto; track letra) {
+            <button
+              class="ahorcado-btn-letra"
+              [class.usado]="letrasUsadas.includes(letra)"
+              [class.correcto]="palabraSeleccionada.includes(letra) && letrasUsadas.includes(letra)"
+              [class.incorrecto]="!palabraSeleccionada.includes(letra) && letrasUsadas.includes(letra)"
+              [disabled]="letrasUsadas.includes(letra) || juegoTerminado"
+              (click)="intentarLetra(letra)">
+              {{ letra }}
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="row">
+      <div class="col-12 text-center">
+        <p class="ahorcado-instrucciones">Selecciona la cantidad de intentos y presiona "Comenzar" para iniciar el juego</p>
+        <button class="ahorcado-btn-iniciar" (click)="iniciarJuego()">
+          <i class="bi bi-play-fill"></i> Comenzar juego
+        </button>
+      </div>
+    </div>
+  }
+</div>
+
+<!-- Modal estático para juego perdido sin usar Bootstrap JS -->
+@if (mostrarModal) {
+  <div class="modal-overlay">
+    <div class="modal-custom">
+      <div class="modal-header">
+        <h5 class="modal-title">¡Juego Terminado!</h5>
+        <button type="button" class="btn-close" (click)="ocultarModal()"></button>
+      </div>
+      <div class="modal-body text-center">
+        <div class="ahorcado-resultado-modal">
+          <!-- Componente de ahorcado para el modal con visualización forzada completa -->
+          <app-ahorcado
+            [intentosFallidos]="maxIntentos"
+            [maxIntentos]="maxIntentos"
+            [mostrarCompleto]="true">
+          </app-ahorcado>
+          <p class="ahorcado-perdido">Has perdido el juego</p>
+          <p>La palabra era: <strong>{{ palabraSeleccionada }}</strong></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="ahorcado-btn-reiniciar" (click)="reiniciar()">
+          Jugar de nuevo
+        </button>
+      </div>
+    </div>
+  </div>
+}

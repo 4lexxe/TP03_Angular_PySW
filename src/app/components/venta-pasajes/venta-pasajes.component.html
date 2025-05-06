@@ -1,0 +1,359 @@
+<div class="container mt-5">
+  <!-- Título principal -->
+  <div class="row">
+    <div class="col-12 text-center mb-4">
+      <h2 class="turismo-titulo">Venta de Pasajes de Turismo</h2>
+    </div>
+  </div>
+
+  <!-- Formulario y tabla de boletos -->
+  <div class="row">
+    <!-- Formulario de registro de boleto -->
+    <div class="col-md-6 mb-4">
+      <div class="card" [ngClass]="{'card-edit-mode': modoEdicion}">
+        <div class="card-header d-flex justify-content-between align-items-center" [ngClass]="{'bg-info': modoEdicion}">
+          <h4>
+            <i [ngClass]="modoEdicion ? 'bi bi-pencil-square' : 'bi bi-ticket-perforated'"></i>
+            {{ modoEdicion ? 'Editar Boleto' : 'Registro de Boleto' }}
+          </h4>
+          <button type="button" class="btn-cancelar" *ngIf="modoEdicion" (click)="cancelarEdicion()">
+            <i class="bi bi-x-circle"></i> Cancelar edición
+          </button>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="boletoForm" (ngSubmit)="onSubmit()">
+            <!-- DNI -->
+            <div class="mb-3">
+              <label for="dni" class="form-label">DNI:</label>
+              <input
+                type="text"
+                id="dni"
+                class="form-control"
+                formControlName="dni"
+                placeholder="Ingrese el DNI (7-8 dígitos)"
+              >
+              <div *ngIf="boletoForm.get('dni')?.invalid && boletoForm.get('dni')?.touched" class="text-danger">
+                <small *ngIf="boletoForm.get('dni')?.errors?.['required']">DNI requerido</small>
+                <small *ngIf="boletoForm.get('dni')?.errors?.['pattern']">El DNI debe contener 7-8 dígitos</small>
+              </div>
+            </div>
+
+            <!-- Precio -->
+            <div class="mb-3">
+              <label for="precio" class="form-label">Precio Base:</label>
+              <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input
+                  type="number"
+                  id="precio"
+                  class="form-control"
+                  formControlName="precio"
+                  min="0.01"
+                  step="0.01"
+                >
+              </div>
+              <div *ngIf="boletoForm.get('precio')?.invalid && boletoForm.get('precio')?.touched" class="text-danger">
+                <small *ngIf="boletoForm.get('precio')?.errors?.['required']">Precio requerido</small>
+                <small *ngIf="boletoForm.get('precio')?.errors?.['min']">El precio debe ser mayor que cero</small>
+              </div>
+            </div>
+
+            <!-- Categoría Turista -->
+            <div class="mb-3">
+              <label for="categoriaTurista" class="form-label">Categoría:</label>
+              <select
+                id="categoriaTurista"
+                class="form-select"
+                formControlName="categoriaTurista"
+              >
+                <option *ngFor="let cat of categorias" [value]="cat.id">{{ cat.nombre }} (Descuento: {{ cat.descuento }}%)</option>
+              </select>
+            </div>
+
+            <!-- Resumen de precio - Mostrado SOLO si precio y categoría tienen valor -->
+            <div class="mb-3 precio-total-box" *ngIf="mostrarResumenPrecio()">
+              <label class="precio-total-label">RESUMEN DE PRECIOS</label>
+              <div class="precio-descuento-card">
+                <div class="precio-original">
+                  <span>Precio Base:</span>
+                  <span>${{ boletoForm.get('precio')?.value | number:'1.2-2' }}</span>
+                </div>
+                <div class="descuento" *ngIf="porcentajeDescuento > 0">
+                  <span>Descuento ({{ porcentajeDescuento }}%):</span>
+                  <span>-${{ descuentoAplicado | number:'1.2-2' }}</span>
+                </div>
+                <div class="precio-final">
+                  <span>PRECIO TOTAL:</span>
+                  <span>${{ precioConDescuento | number:'1.2-2' }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Email:</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                formControlName="email"
+                placeholder="ejemplo@correo.com"
+              >
+              <div *ngIf="boletoForm.get('email')?.invalid && boletoForm.get('email')?.touched" class="text-danger">
+                <small *ngIf="boletoForm.get('email')?.errors?.['required']">Email requerido</small>
+                <small *ngIf="boletoForm.get('email')?.errors?.['email']">El formato del email es inválido</small>
+              </div>
+            </div>
+
+            <!-- Mensajes de error y éxito -->
+            <div *ngIf="mensajesError.length > 0" class="alert alert-danger">
+              <ul class="mb-0">
+                <li *ngFor="let error of mensajesError">{{ error }}</li>
+              </ul>
+            </div>
+            <div *ngIf="mensajeExito" class="alert alert-success">
+              {{ mensajeExito }}
+            </div>
+
+            <!-- Botones -->
+            <div class="d-flex justify-content-between mt-4">
+              <button type="submit" class="btn-registrar" [disabled]="boletoForm.invalid">
+                <i class="bi" [ngClass]="modoEdicion ? 'bi-pencil-square' : 'bi-plus-circle'"></i>
+                {{ modoEdicion ? 'Actualizar Boleto' : 'REGISTRAR Boleto' }}
+              </button>
+              <button type="button" class="btn-cancelar" (click)="resetForm()">
+                <i class="bi bi-eraser"></i> Limpiar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de boletos -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4>
+            <i class="bi bi-list-check me-2"></i>
+            Boletos Registrados
+            <span class="badge bg-primary ms-2">{{ boletos.length }}</span>
+          </h4>
+          <div>
+            <button type="button" class="btn-refresh me-2" (click)="refreshBoletos()" title="Refrescar lista">
+              <i class="bi bi-arrow-clockwise"></i>
+            </button>
+            <button type="button" class="btn-vaciar" *ngIf="boletos.length > 0" (click)="vaciarBoletos()" title="Vaciar lista">
+              <i class="bi bi-trash"></i> Vaciar lista
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div *ngIf="boletos.length === 0" class="text-center py-4">
+            <i class="bi bi-inbox" style="font-size: 2rem; color: #ccc;"></i>
+            <p class="mt-3 mb-0">No hay boletos registrados</p>
+          </div>
+
+          <div *ngIf="boletos.length > 0" class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>DNI</th>
+                  <th>Precio</th>
+                  <th>Categoría</th>
+                  <th>Fecha</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let boleto of boletos" [ngClass]="{'table-info': boleto.id === idBoletoEditando}">
+                  <td>{{ boleto.dni }}</td>
+                  <td>{{ boleto.precio | currency:'USD':'symbol':'1.2-2' }}</td>
+                  <td>
+                    <span class="badge" [ngClass]="{
+                      'bg-success': boleto.categoriaTurista === 1,
+                      'bg-primary': boleto.categoriaTurista === 2,
+                      'bg-info': boleto.categoriaTurista === 3
+                    }">
+                      {{ getCategoriaTexto(boleto.categoriaTurista) }}
+                    </span>
+                  </td>
+                  <td>{{ boleto.fechaCompra | date:formatoFecha }}</td>
+                  <td><span class="badge bg-secondary">{{ boleto.fechaCompra | estadoBoleto }}</span></td>
+                  <td>
+                    <div class="btn-group">
+                      <button class="btn-accion btn-editar" [ngClass]="{'active': boleto.id === idBoletoEditando}" (click)="editarBoleto(boleto)" title="Editar">
+                        <i class="bi bi-pencil-square"></i>
+                      </button>
+                      <button class="btn-accion btn-eliminar" (click)="eliminarBoleto(boleto.id)" title="Eliminar">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="5" class="text-end fw-bold">Total recaudado:</td>
+                  <td colspan="1" class="fw-bold">{{ totalRecaudado | currency:'USD':'symbol':'1.2-2' }}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección de tabla detallada de boletos y resumen -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4>Detalle de Boletos Vendidos</h4>
+          <span class="badge bg-primary">{{ boletos.length }} Boletos</span>
+        </div>
+        <div class="card-body">
+          <!-- Tabla estándar para cuando no hay DataTables disponible -->
+          <div *ngIf="boletos.length === 0" class="text-center py-4">
+            <i class="bi bi-inbox" style="font-size: 2rem; color: #ccc;"></i>
+            <p class="mt-3 mb-0">No hay boletos registrados</p>
+          </div>
+
+          <div *ngIf="boletos.length > 0" class="table-responsive">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>DNI</th>
+                  <th>Email</th>
+                  <th>Fecha de Compra</th>
+                  <th>Categoría</th>
+                  <th>Precio Original</th>
+                  <th>Descuento</th>
+                  <th>Precio Final</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let boleto of boletos; let i = index" [ngClass]="{'table-info': boleto.id === idBoletoEditando}">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ boleto.dni }}</td>
+                  <td>{{ boleto.email }}</td>
+                  <td>{{ boleto.fechaCompra | date:formatoFecha }}</td>
+                  <td>
+                    <span class="badge" [ngClass]="{
+                      'bg-success': boleto.categoriaTurista === 1,
+                      'bg-primary': boleto.categoriaTurista === 2,
+                      'bg-info': boleto.categoriaTurista === 3
+                    }">
+                      {{ getCategoriaTexto(boleto.categoriaTurista) }}
+                    </span>
+                  </td>
+                  <td>{{ calcularPrecioSinDescuento(boleto) | currency:'USD':'symbol':'1.2-2' }}</td>
+                  <td>{{ getDescuentoCategoria(boleto.categoriaTurista) | percent:'1.0-0' }}</td>
+                  <td>{{ boleto.precio | currency:'USD':'symbol':'1.2-2' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resumen estadístico por categoría -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4>Resumen de Ventas por Categoría</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <!-- Tarjeta de resumen general -->
+            <div class="col-md-4 mb-4">
+              <div class="resumen-card total">
+                <div class="resumen-icon">
+                  <i class="bi bi-cash-stack"></i>
+                </div>
+                <div class="resumen-content">
+                  <h5>Total Recaudado</h5>
+                  <h3>{{ totalRecaudado | currency:'USD':'symbol':'1.2-2' }}</h3>
+                  <span>{{ totalBoletos }} boletos vendidos</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Resumen por categoría -->
+            <div class="col-md-4 mb-4" *ngFor="let resumen of resumenCategorias">
+              <div class="resumen-card">
+                <div class="resumen-icon" [ngClass]="{
+                  'menor': resumen.categoria === 'Menor',
+                  'adulto': resumen.categoria === 'Adulto',
+                  'jubilado': resumen.categoria === 'Jubilado'
+                }">
+                  <i class="bi" [ngClass]="{
+                    'bi-person-bounding-box': resumen.categoria === 'Menor',
+                    'bi-person': resumen.categoria === 'Adulto',
+                    'bi-person-fill': resumen.categoria === 'Jubilado'
+                  }"></i>
+                </div>
+                <div class="resumen-content">
+                  <h5>{{ resumen.categoria }}</h5>
+                  <h3>{{ resumen.totalVentas | currency:'USD':'symbol':'1.2-2' }}</h3>
+                  <span>{{ resumen.cantidadBoletos }} boletos ({{ resumen.porcentaje | percent:'1.1-1' }})</span>
+                  <div class="progress mt-2">
+                    <div class="progress-bar"
+                         [ngClass]="getColorPorcentaje(resumen.porcentaje)"
+                         [style.width.%]="resumen.porcentaje">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabla de resumen detallado -->
+          <div class="table-responsive mt-4">
+            <table class="table table-bordered">
+              <thead class="table-light">
+                <tr>
+                  <th>Categoría</th>
+                  <th>Cantidad de Boletos</th>
+                  <th>% del Total</th>
+                  <th>Ventas</th>
+                  <th>% de Ingresos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let resumen of resumenCategorias">
+                  <td>
+                    <span class="badge" [ngClass]="{
+                      'bg-success': resumen.categoria === 'Menor',
+                      'bg-primary': resumen.categoria === 'Adulto',
+                      'bg-info': resumen.categoria === 'Jubilado'
+                    }">{{ resumen.categoria }}</span>
+                  </td>
+                  <td>{{ resumen.cantidadBoletos }}</td>
+                  <td>{{ resumen.porcentaje | percent:'1.1-1' }}</td>
+                  <td>{{ resumen.totalVentas | currency:'USD':'symbol':'1.2-2' }}</td>
+                  <td>{{ totalRecaudado > 0 ? (resumen.totalVentas / totalRecaudado) : 0 | percent:'1.1-1' }}</td>
+                </tr>
+              </tbody>
+              <tfoot class="table-dark">
+                <tr>
+                  <td><strong>TOTAL</strong></td>
+                  <td><strong>{{ totalBoletos }}</strong></td>
+                  <td><strong>100%</strong></td>
+                  <td><strong>{{ totalRecaudado | currency:'USD':'symbol':'1.2-2' }}</strong></td>
+                  <td><strong>100%</strong></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

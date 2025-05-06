@@ -1,0 +1,194 @@
+/* Estilos minimalistas para productos */
+.producto-titulo {
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #000 !important;
+  color: #333;
+}
+
+.producto-card {
+  border: 2px solid #000;
+  background-color: #fff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+}
+
+.producto-card:hover {
+  transform: translateY(-5px);
+}
+
+.producto-img-container {
+  height: 200px;
+  overflow: hidden;
+  border-bottom: 2px solid #000;
+}
+
+.producto-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: #f8f9fa;
+  padding: 10px;
+}
+
+.producto-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.producto-nombre {
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.producto-descripcion {
+  font-family: 'Courier New', monospace;
+  margin-bottom: 15px;
+  color: #666;
+  font-size: 0.9rem;
+  flex-grow: 1;
+}
+
+.producto-precio {
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #000;
+}
+
+/* Estilos para botones */
+.btn-agregar, .btn-carrito, .btn-secundario, .btn-checkout {
+  background-color: #fff;
+  border: 2px solid #000;
+  color: #000;
+  padding: 6px 12px;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-agregar:hover:not(:disabled),
+.btn-carrito:hover,
+.btn-checkout:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.btn-secundario:hover {
+  background-color: #e9ecef;
+}
+
+.btn-checkout {
+  background-color: #f8f9fa;
+}
+
+.btn-carrito {
+  position: relative;
+  padding: 8px 15px;
+}
+
+.btn-agregar:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-agregar.en-carrito {
+  background-color: #f8f9fa;
+  border-color: #6c757d;
+  color: #6c757d;
+}
+
+/* Estilos para el badge del carrito */
+.btn-carrito .badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 50%;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+/* Estilos para el modal del carrito */
+.modal-header, .modal-footer {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #000;
+  border-top: 2px solid #000;
+  font-family: 'Courier New', monospace;
+}
+
+.modal-title {
+  font-weight: 700;
+  color: #333;
+}
+
+.modal-content {
+  border: 2px solid #000;
+  border-radius: 0;
+}
+
+.carrito-modal-img {
+  width: 50px;
+  height: 50px;
+  padding: 5px;
+  border: 1px solid #000;
+  background-color: #f8f9fa;
+}
+
+.carrito-modal-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.table {
+  font-family: 'Courier New', monospace;
+}
+
+.table thead {
+  background-color: #f8f9fa;
+}
+
+.table th {
+  border-bottom: 2px solid #000;
+  font-weight: 700;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.carrito-eliminar {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #dc3545;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.carrito-eliminar:hover {
+  color: #bd2130;
+}
+
+@media (max-width: 768px) {
+  .producto-img-container {
+    height: 180px;
+  }
+
+  .producto-info {
+    padding: 15px;
+  }
+
+  .producto-nombre {
+    font-size: 1rem;
+  }
+}

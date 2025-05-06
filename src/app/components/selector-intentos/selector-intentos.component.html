@@ -1,0 +1,20 @@
+<div class="selector-intentos">
+  <div class="intentos-label">Selecciona el número de intentos:</div>
+
+  <div class="intentos-controls">
+    <select
+      class="intentos-select"
+      [(ngModel)]="intentosSeleccionado"
+      (change)="cambiarIntentos()">
+      @for (opcion of intentosOpciones; track opcion) {
+        <option [value]="opcion">{{ opcion }}</option>
+      }
+    </select>
+
+    <button
+      class="intentos-random-btn"
+      (click)="generarIntentosAleatorios()">
+      <i class="bi bi-shuffle"></i> Aleatorio
+    </button>
+  </div>
+</div>

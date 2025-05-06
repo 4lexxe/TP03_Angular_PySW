@@ -1,0 +1,44 @@
+<div class="container mt-5">
+  <div class="row mb-5">
+    <div class="col-12 text-center">
+      <h1 class="home-title">Trabajo Práctico N°3</h1>
+      <p class="home-subtitle">Seleccione uno de los siguientes componentes para comenzar:</p>
+    </div>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    @for (ruta of rutas; track ruta.titulo) {
+      <div class="col">
+        <div class="card home-card h-100">
+          <div class="card-image-container">
+            <div class="card-img-overlay-bg"></div>
+            <img [src]="ruta.imagen" class="card-img-top" [alt]="ruta.titulo"
+                 onerror="this.style.display='none'; this.parentElement.classList.add('no-image');">
+            <div class="card-img-overlay">
+              <h5 class="card-title">
+                <i class="bi" [ngClass]="ruta.icono"></i>
+                {{ ruta.titulo }}
+              </h5>
+            </div>
+          </div>
+          <div class="card-body">
+            <p class="card-text">{{ ruta.descripcion }}</p>
+            <a [routerLink]="ruta.ruta" class="btn btn-primary stretched-link">
+              <i class="bi bi-arrow-right-circle me-2"></i>
+              Ir al componente
+            </a>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-12 text-center">
+      <hr>
+      <p class="text-muted small">
+        TP03 - Programación y Servicios Web - 2024
+      </p>
+    </div>
+  </div>
+</div>
